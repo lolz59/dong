@@ -11,8 +11,8 @@ The prefix is ``;`` currently, but I am going to find out how to make it configu
 The problem with that is because of how roblox uses key codes and enumerations (ex. Enum.Keycode.Semicolon)  
 
 ### Loader
-For basic admin, use this script: ``https://raw.githubusercontent.com/lolz59/dong/main/basic.lua``  
-The loader for Premium admin will be sent to you when purchased, most likely via an email  
+For basic admin, use this script: ``loadstring(game:HttpGet("https://raw.githubusercontent.com/lolz59/dong/main/basic.lua", true))``  
+The loader for Premium admin will be sent to you when purchased, most likely via an email.  
 
 ## Basic admin
 This is the free version. You can get it in the file called ``basic.lua``  
