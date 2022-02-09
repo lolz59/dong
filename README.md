@@ -1,5 +1,5 @@
 # Dong admin
-Dong admin is a script developed by bIue#2958 created for Prison life  
+Dong admin is an FE admin script made by bIue#2958
 
 ## Usage
 ### Arguments
@@ -14,11 +14,12 @@ The problem with that is because of how roblox uses key codes and enumerations (
 This is the free version. You can get it in the file called ``basic.lua``  
 Basic commands are limited because it is free. Commands are available in the file called ``basiccmds.lua``
 
-
 ## Head admin  
 Head admin is the paid version, but its not for sale yet.  
 For updates on purchasing it, join our server at https://discord.gg/MwUTTVnYS7  
-
+  
 Head admin has feature to more commands and arguments, including:
 * Can use commands on all players instead of a certain target  
 * Serversided commands on other players such as `;ff (plr)` and `;give (item) (plr)`  
+  
+Script is not available publicly because its paid, but commands are in the file caled ``premiumcmds.lua``
