@@ -7,7 +7,7 @@ Basic admin is the free version. You can get it in the file called ``basic.lua``
 
 ## Head admin
 Head admin is the paid version, but its not for sale yet.
-> For updates on purchasing it, join our server at https://discord.gg/MwUTTVnYS7
+For updates on purchasing it, join our server at https://discord.gg/MwUTTVnYS7
 
 Head admin has feature to more commands and arguments, including: 
 * Can use commands on all players instead of a certain target
