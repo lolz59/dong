@@ -12,7 +12,7 @@ The problem with that is because of how roblox uses key codes and enumerations (
 
 ## Basic admin
 This is the free version. You can get it in the file called ``basic.lua``  
-Basic commands are limited because it is free. Commands are available in the file called ``basiccmds.lua``
+Basic commands are limited because it is free, you can compare it in ``cmds.lua``
 
 ## Head admin  
 Head admin is the paid version, but its not for sale yet.  
@@ -22,4 +22,4 @@ Head admin has feature to more commands and arguments, including:
 * Can use commands on all players instead of a certain target  
 * Serversided commands on other players such as `;ff (plr)` and `;give (item) (plr)`  
   
-Script is not available publicly because its paid, but commands are in the file caled ``premiumcmds.lua``
+Script is not available publicly because its paid
