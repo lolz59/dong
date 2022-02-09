@@ -10,6 +10,10 @@ Head admin features the "all" target, which uses the command on every single pla
 The prefix is ``;`` currently, but I am going to find out how to make it configurable via commands.
 The problem with that is because of how roblox uses key codes and enumerations (ex. Enum.Keycode.Semicolon)  
 
+### Loader
+For basic admin, use this script: ``https://raw.githubusercontent.com/lolz59/dong/main/basic.lua``  
+The loader for Premium admin will be sent to you when purchased, most likely via an email  
+
 ## Basic admin
 This is the free version. You can get it in the file called ``basic.lua``  
 Basic commands are limited because it is free, you can compare it in ``cmds.lua``
