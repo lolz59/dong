@@ -1,3 +1,8 @@
+-- Gui to Lua
+-- Version: 3.2
+
+-- Instances:
+
 local DongAdmin = Instance.new("ScreenGui")
 local Boot = Instance.new("Frame")
 local Title = Instance.new("TextLabel")
@@ -5,11 +10,12 @@ local Description = Instance.new("TextLabel")
 local UICorner = Instance.new("UICorner")
 local Continue = Instance.new("TextButton")
 local UICorner_2 = Instance.new("UICorner")
+local TextLabel = Instance.new("TextLabel")
 local Main = Instance.new("Frame")
 local CmdBar = Instance.new("Frame")
 local UICorner_3 = Instance.new("UICorner")
 local TextBox = Instance.new("TextBox")
-local Color = Instance.new("Frame")
+local UndColor = Instance.new("Frame")
 local UICorner_4 = Instance.new("UICorner")
 local Arrow = Instance.new("TextLabel")
 local Credits = Instance.new("TextLabel")
@@ -29,6 +35,8 @@ local UICorner_9 = Instance.new("UICorner")
 local Command_5 = Instance.new("TextLabel")
 local UICorner_10 = Instance.new("UICorner")
 
+--Properties:
+
 DongAdmin.Name = "DongAdmin"
 DongAdmin.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
 DongAdmin.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
@@ -36,17 +44,17 @@ DongAdmin.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 Boot.Name = "Boot"
 Boot.Parent = DongAdmin
 Boot.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
-Boot.Position = UDim2.new(0.324528277, 0, 0.349693239, 0)
-Boot.Size = UDim2.new(0.349999994, 0, 0.300000012, 0)
+Boot.Position = UDim2.new(0.349811316, 0, 0.374539882, 0)
+Boot.Size = UDim2.new(0.300000012, 0, 0.25, 0)
 
 Title.Name = "Title"
 Title.Parent = Boot
 Title.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 Title.BackgroundTransparency = 1.000
-Title.Position = UDim2.new(0, 0, 0.123517379, 0)
+Title.Position = UDim2.new(0, 0, 0.12760736, 0)
 Title.Size = UDim2.new(1, 0, 0.200000003, 0)
 Title.Font = Enum.Font.GothamSemibold
-Title.Text = "NOTICE"
+Title.Text = "IMPORTANT"
 Title.TextColor3 = Color3.fromRGB(255, 255, 255)
 Title.TextScaled = true
 Title.TextSize = 14.000
@@ -56,11 +64,12 @@ Description.Name = "Description"
 Description.Parent = Boot
 Description.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 Description.BackgroundTransparency = 1.000
-Description.Position = UDim2.new(0.0996226445, 0, 0.327198386, 0)
-Description.Size = UDim2.new(0.800000012, 0, 0.300000012, 0)
+Description.Position = UDim2.new(0.0996226445, 0, 0.355828255, 0)
+Description.Size = UDim2.new(0.800000012, 0, 0.200000003, 0)
 Description.Font = Enum.Font.Gotham
 Description.Text = "Press ; to open the command bar. This admin script is made by bIue#2958 for Prison Life. Join my discord server with the \"discord\" command"
 Description.TextColor3 = Color3.fromRGB(255, 255, 255)
+Description.TextScaled = true
 Description.TextSize = 15.000
 Description.TextWrapped = true
 Description.TextXAlignment = Enum.TextXAlignment.Left
@@ -71,15 +80,28 @@ UICorner.Parent = Boot
 Continue.Name = "Continue"
 Continue.Parent = Boot
 Continue.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
-Continue.Position = UDim2.new(0.298652291, 0, 0.666666567, 0)
+Continue.Position = UDim2.new(0.298652291, 0, 0.670756519, 0)
 Continue.Size = UDim2.new(0.400000006, 0, 0.200000003, 0)
 Continue.Font = Enum.Font.Gotham
-Continue.Text = "Continue"
+Continue.Text = ""
 Continue.TextColor3 = Color3.fromRGB(255, 255, 255)
 Continue.TextSize = 18.000
+Continue.TextWrapped = true
 
 UICorner_2.CornerRadius = UDim.new(0, 3)
 UICorner_2.Parent = Continue
+
+TextLabel.Parent = Continue
+TextLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+TextLabel.BackgroundTransparency = 1.000
+TextLabel.Position = UDim2.new(0, 0, 0.286298543, 0)
+TextLabel.Size = UDim2.new(1, 0, 0.400000006, 0)
+TextLabel.Font = Enum.Font.Gotham
+TextLabel.Text = "Continue"
+TextLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+TextLabel.TextScaled = true
+TextLabel.TextSize = 14.000
+TextLabel.TextWrapped = true
 
 Main.Name = "Main"
 Main.Parent = DongAdmin
@@ -94,7 +116,7 @@ CmdBar.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
 CmdBar.Position = UDim2.new(0.249811321, 0, 0.915337384, 0)
 CmdBar.Size = UDim2.new(0.5, 0, 0.0500000007, 0)
 
-UICorner_3.CornerRadius = UDim.new(0, 3)
+UICorner_3.CornerRadius = UDim.new(0.0799999982, 0)
 UICorner_3.Parent = CmdBar
 
 TextBox.Parent = CmdBar
@@ -104,20 +126,21 @@ TextBox.Position = UDim2.new(0.0500628985, 0, 0.0981595069, 0)
 TextBox.Size = UDim2.new(0.939999998, 0, 0.800000012, 0)
 TextBox.Font = Enum.Font.Gotham
 TextBox.PlaceholderColor3 = Color3.fromRGB(200, 200, 200)
-TextBox.PlaceholderText = "Command here"
+TextBox.PlaceholderText = "COMMAND HERE"
 TextBox.Text = ""
 TextBox.TextColor3 = Color3.fromRGB(255, 255, 255)
 TextBox.TextSize = 14.000
 TextBox.TextXAlignment = Enum.TextXAlignment.Left
 
-Color.Name = "Color"
-Color.Parent = CmdBar
-Color.BackgroundColor3 = Color3.fromRGB(255, 151, 32)
-Color.Position = UDim2.new(0, 0, 0.899999976, 0)
-Color.Size = UDim2.new(1, 0, 0.100000001, 0)
+UndColor.Name = "UndColor"
+UndColor.Parent = CmdBar
+UndColor.BackgroundColor3 = Color3.fromRGB(88, 101, 242)
+UndColor.BorderSizePixel = 0
+UndColor.Position = UDim2.new(0, 0, 0.899999976, 0)
+UndColor.Size = UDim2.new(1, 0, 0.100000001, 0)
 
-UICorner_4.CornerRadius = UDim.new(0, 3)
-UICorner_4.Parent = Color
+UICorner_4.CornerRadius = UDim.new(1, 0)
+UICorner_4.Parent = UndColor
 
 Arrow.Name = "Arrow"
 Arrow.Parent = CmdBar
@@ -138,7 +161,7 @@ Credits.BackgroundTransparency = 0.999
 Credits.Position = UDim2.new(0, 0, 1, 0)
 Credits.Size = UDim2.new(0.5, 0, 0.400000006, 0)
 Credits.Font = Enum.Font.Gotham
-Credits.Text = "Dong admin by bIue#2958"
+Credits.Text = "BY bIue#2958"
 Credits.TextColor3 = Color3.fromRGB(252, 252, 252)
 Credits.TextSize = 12.000
 Credits.TextWrapped = true
@@ -256,8 +279,10 @@ Command_5.TextXAlignment = Enum.TextXAlignment.Left
 UICorner_10.CornerRadius = UDim.new(0, 3)
 UICorner_10.Parent = Command_5
 
-function AdminHandler()
-	local script = Instance.new("LocalScript", CmdBar)
+-- Scripts:
+
+local function XFRR_fake_script() -- CmdBar.Admin 
+	local script = Instance.new('LocalScript', CmdBar)
 
 	local UserInputService = game:GetService("UserInputService")
 	local TweenService = game:GetService("TweenService")
@@ -289,7 +314,7 @@ function AdminHandler()
 	local loopkill = {}
 	local admins = {Player}
 	
-	local function findplr(String)
+	function findplr(String)
 		if not String then return end
 		local matching = {}
 		for _,Player in ipairs(game.Players:GetPlayers()) do
@@ -334,13 +359,12 @@ function AdminHandler()
 			end
 			Remington.Parent = Player.Character
 			Player.Character.Humanoid:UnequipTools()
-			game.Players.LocalPlayer.Character:FindFirstChild("Remington 870"):Destroy()
 		end)
 	end
 	
 	-- Command handler
 	
-	local function OnCommandEnter(player, command)
+	function OnCommandEnter(player, command)
 		if table.find(admins, player) then
 			local command = string.lower(command)
 			local splitted = command:split(" ")
@@ -376,16 +400,31 @@ function AdminHandler()
 	Player.Chatted:Connect(function(message)
 		OnCommandEnter(Player, message)
 	end)
+	
+	-- Other
+	
+	--task.spawn(function()
+	--	while true do
+	--		local UndColor = Frame.UndColor
+	--		TweenService:Create(UndColor, TweenInfo.new(3), {BackgroundColor3 = Color3.fromRGB(math.random(1,255),math.random(1,255),math.random(1,255))}):Play()
+	--		task.wait(3)
+	--	end
+	--end)
 end
-
-coroutine.wrap(AdminHandler)()
-
-function OnExecute()
-	local script = Instance.new("LocalScript", DongAdmin)
+coroutine.wrap(XFRR_fake_script)()
+local function BDOMK_fake_script() -- DongAdmin.OnExecute 
+	local script = Instance.new('LocalScript', DongAdmin)
 
 	local gui = script.Parent
 	local Boot = gui:WaitForChild("Boot")
 	local Main = gui:WaitForChild("Main")
+	local Player = game.Players.LocalPlayer
+	
+	KRNL_LOADED = true
+	
+	if not KRNL_LOADED then
+		Player:Kick("This executor is not supported\nMore info at github.com/lolz59/dong")
+	end
 	
 	Boot.Visible = true
 	Main.Visible = false
@@ -395,5 +434,4 @@ function OnExecute()
 		Main.Visible = true
 	end)
 end
-
-coroutine.wrap(OnExecute)()
+coroutine.wrap(BDOMK_fake_script)()
