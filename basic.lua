@@ -281,7 +281,7 @@ UICorner_10.Parent = Command_5
 
 -- Scripts:
 
-local function TLVUESV_fake_script() -- CmdBar.Admin 
+local function NMIO_fake_script() -- CmdBar.Admin 
 	local script = Instance.new('LocalScript', CmdBar)
 
 	local UserInputService = game:GetService("UserInputService")
@@ -464,7 +464,7 @@ local function TLVUESV_fake_script() -- CmdBar.Admin
 		if values.hitbox == true then
 			local HitboxSize = values.hitboxsize
 			for i,v in pairs(Players:GetPlayers()) do
-				if v ~= Player  and v:IsA("Player") then
+				if v ~= Player and v.TeamColor ~= Player.TeamColor and v:IsA("Player") then
 					local Character = v.Character
 					local HumanoidRootPart = Character:WaitForChild("HumanoidRootPart")
 					HumanoidRootPart.Size = Vector3.new(HitboxSize,HitboxSize,HitboxSize)
@@ -480,8 +480,8 @@ local function TLVUESV_fake_script() -- CmdBar.Admin
 		end
 	end)
 end
-coroutine.wrap(TLVUESV_fake_script)()
-local function AHEAQ_fake_script() -- DongAdmin.OnExecute 
+coroutine.wrap(NMIO_fake_script)()
+local function EREEA_fake_script() -- DongAdmin.OnExecute 
 	local script = Instance.new('LocalScript', DongAdmin)
 
 	local gui = script.Parent
@@ -503,4 +503,4 @@ local function AHEAQ_fake_script() -- DongAdmin.OnExecute
 		Main.Visible = true
 	end)
 end
-coroutine.wrap(AHEAQ_fake_script)()
+coroutine.wrap(EREEA_fake_script)()
