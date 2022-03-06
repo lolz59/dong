@@ -1,3 +1,8 @@
+-- Gui to Lua
+-- Version: 3.2
+
+-- Instances:
+
 local DongAdmin = Instance.new("ScreenGui")
 local Boot = Instance.new("Frame")
 local Title = Instance.new("TextLabel")
@@ -120,8 +125,8 @@ TextBox.BackgroundTransparency = 0.999
 TextBox.Position = UDim2.new(0.0500628985, 0, 0.0981595069, 0)
 TextBox.Size = UDim2.new(0.939999998, 0, 0.800000012, 0)
 TextBox.Font = Enum.Font.Gotham
-TextBox.PlaceholderColor3 = Color3.fromRGB(200, 200, 200)
-TextBox.PlaceholderText = "COMMAND HERE"
+TextBox.PlaceholderColor3 = Color3.fromRGB(175, 175, 175)
+TextBox.PlaceholderText = "Command here"
 TextBox.Text = ""
 TextBox.TextColor3 = Color3.fromRGB(255, 255, 255)
 TextBox.TextSize = 14.000
@@ -156,7 +161,7 @@ Credits.BackgroundTransparency = 0.999
 Credits.Position = UDim2.new(0, 0, 1, 0)
 Credits.Size = UDim2.new(0.5, 0, 0.400000006, 0)
 Credits.Font = Enum.Font.Gotham
-Credits.Text = "BY bIue#2958"
+Credits.Text = "bIue#4414"
 Credits.TextColor3 = Color3.fromRGB(252, 252, 252)
 Credits.TextSize = 12.000
 Credits.TextWrapped = true
@@ -276,7 +281,7 @@ UICorner_10.Parent = Command_5
 
 -- Scripts:
 
-local function XFRR_fake_script() -- CmdBar.Admin 
+local function TLVUESV_fake_script() -- CmdBar.Admin 
 	local script = Instance.new('LocalScript', CmdBar)
 
 	local UserInputService = game:GetService("UserInputService")
@@ -306,7 +311,11 @@ local function XFRR_fake_script() -- CmdBar.Admin
 	-- Command essentials
 	
 	local cmds = {}
-	local loopkill = {}
+	local values = {
+		loopkill = {};
+		hitbox = false;
+		hitboxsize = 5;
+	}
 	local admins = {Player}
 	
 	function findplr(String)
@@ -327,34 +336,79 @@ local function XFRR_fake_script() -- CmdBar.Admin
 		btools.Parent = Player.Backpack
 	end
 	
-	function cmds.give(sender, args)
-		local name = tostring(args[1])
-		if name then
-			workspace.ItemHandler:InvokeServer(workspace.Prison_ITEMS.giver[name].ITEMPICKUP)
-		end
+	function cmds.print(sender, args)
+		print(args[1])
 	end
 	
-	function cmds.kill(sender, args)
-		local target = findplr(tostring(args[1]))
-		pcall(function()
-			if not target or target.Character:FindFirstChild("ForceField") then return end
-			if target.TeamColor.Name == Player.TeamColor.Name then
-				local savedcf = Player.Character.HumanoidRootPart.CFrame
-				local savedcamcf = workspace.CurrentCamera.CFrame
-				workspace.Remote.loadchar:InvokeServer(nil, BrickColor.random().Name)
-				Player.Character.HumanoidRootPart.CFrame = savedcf
-				workspace.CurrentCamera.CFrame = savedcamcf
+	function cmds.ws(sender, args)
+		local speed = args[1]
+		sender.Character.Humanoid.WalkSpeed = speed
+	end
+	function cmds.jp(sender, args)
+		local jp = args[1]
+		sender.Character.Humanoid.JumpPower = jp
+	end
+	
+	function cmds.nogui()
+		script.Parent.Parent.Parent:Destroy()
+	end
+	
+	function cmds.hbe(sender, args)
+		local enabled = args[1]
+		if enabled == "on" then
+			values.hitbox = true
+		elseif enabled == "off" then
+			values.hitbox = false
+		end
+	end
+	function cmds.hbsize(sender, args)
+		local size = tonumber(args[1])
+		values.hitboxsize = size
+	end
+	
+	function cmds.size(sender)
+		local Character = sender.Character
+		local Humanoid = Character:FindFirstChildOfClass("Humanoid")
+		local function rm()
+			for i,v in pairs(Character:GetDescendants()) do
+				if v:IsA("BasePart") then
+					if v.Name == "Handle" or v.Name == "Head" then
+						if Character.Head:FindFirstChild("OriginalSize") then
+							Character.Head.OriginalSize:Destroy()
+						end
+					else
+						for i,cav in pairs(v:GetDescendants()) do
+							if cav:IsA("Attachment") then
+								if cav:FindFirstChild("OriginalPosition") then
+									cav.OriginalPosition:Destroy()  
+								end
+							end
+						end
+						v:FindFirstChild("OriginalSize"):Destroy()
+						if v:FindFirstChild("AvatarPartScaleType") then
+							v:FindFirstChild("AvatarPartScaleType"):Destroy()
+						end
+					end
+				end
 			end
-			local Head = target.Character.Head
-			local Remington = Player.Character:FindFirstChild("Remington 870") or Player.Backpack:FindFirstChild("Remington 870")
-			if not Remington then cmds.Give("Remington 870") end
-			Remington = Player.Character:FindFirstChild("Remington 870") or Player.Backpack:FindFirstChild("Remington 870")
-			if Remington and Head then
-				game.ReplicatedStorage.ShootEvent:FireServer({{["RayObject"] = Ray.new(Vector3.new(), Vector3.new()),["Distance"] = 0,["Cframe"] = CFrame.new(),["Hit"] = Head},{["RayObject"] = Ray.new(Vector3.new(), Vector3.new()),["Distance"] = 0,["Cframe"] = CFrame.new(),["Hit"] = Head},{["RayObject"] = Ray.new(Vector3.new(), Vector3.new()),["Distance"] = 0,["Cframe"] = CFrame.new(),["Hit"] = Head};{["RayObject"] = Ray.new(Vector3.new(), Vector3.new()),["Distance"] = 0,["Cframe"] = CFrame.new(),["Hit"] = Head};{["RayObject"] = Ray.new(Vector3.new(), Vector3.new()),["Distance"] = 0,["Cframe"] = CFrame.new(),["Hit"] = Head};{["RayObject"] = Ray.new(Vector3.new(), Vector3.new()),["Distance"] = 0,["Cframe"] = CFrame.new(),["Hit"] = Head};{["RayObject"] = Ray.new(Vector3.new(), Vector3.new()),["Distance"] = 0,["Cframe"] = CFrame.new(),["Hit"] = Head};{["RayObject"] = Ray.new(Vector3.new(), Vector3.new()),["Distance"] = 0,["Cframe"] = CFrame.new(),["Hit"] = Head}}, Remington)
-			end
-			Remington.Parent = Player.Character
-			Player.Character.Humanoid:UnequipTools()
-		end)
+		end
+		rm() wait(0.5)
+		Humanoid:FindFirstChild("BodyProportionScale"):Destroy()
+		wait(1) rm() wait(0.5)
+		Humanoid:FindFirstChild("BodyHeightScale"):Destroy()
+		wait(1) rm() wait(0.5)
+		Humanoid:FindFirstChild("BodyWidthScale"):Destroy()
+		wait(1) rm() wait(0.5)
+		Humanoid:FindFirstChild("BodyDepthScale"):Destroy()
+		wait(1) rm() wait(0.5)
+		Humanoid:FindFirstChild("HeadScale"):Destroy()
+	end
+	
+	function cmds.admin(sender, args)
+		table.insert(admins, findplr(args[1]))
+	end
+	function cmds.unadmin(sender, args)
+		table.remove(admins, findplr(args[1]))
 	end
 	
 	-- Command handler
@@ -372,7 +426,7 @@ local function XFRR_fake_script() -- CmdBar.Admin
 				for i = 2, #splitted, 1 do
 					table.insert(args, splitted[i])
 				end
-				cmds[name](player, args)
+				coroutine.wrap(cmds[name])(player, args)
 			end
 		end
 	end
@@ -385,11 +439,9 @@ local function XFRR_fake_script() -- CmdBar.Admin
 	end)
 	
 	Players.PlayerAdded:Connect(function(player)
-		if player ~= Player then
-			player.Chatted:Connect(function(message)
-				OnCommandEnter(player, message)
-			end)
-		end
+		player.Chatted:Connect(function(message)
+			OnCommandEnter(player, message)
+		end)
 	end)
 	
 	Player.Chatted:Connect(function(message)
@@ -405,9 +457,31 @@ local function XFRR_fake_script() -- CmdBar.Admin
 	--		task.wait(3)
 	--	end
 	--end)
+	
+	-- Loops
+	
+	RunService.RenderStepped:Connect(function()
+		if values.hitbox == true then
+			local HitboxSize = values.hitboxsize
+			for i,v in pairs(Players:GetPlayers()) do
+				if v ~= Player  and v:IsA("Player") then
+					local Character = v.Character
+					local HumanoidRootPart = Character:WaitForChild("HumanoidRootPart")
+					HumanoidRootPart.Size = Vector3.new(HitboxSize,HitboxSize,HitboxSize)
+					HumanoidRootPart.Transparency = 0.8
+					HumanoidRootPart.BrickColor = v.TeamColor
+					HumanoidRootPart.Material = Enum.Material.Neon
+					HumanoidRootPart.CanCollide = false
+					if Character.Humanoid.Health == 0 then
+						HumanoidRootPart.Size = Vector3.new(1,1,1)
+					end
+				end
+			end
+		end
+	end)
 end
-coroutine.wrap(XFRR_fake_script)()
-local function BDOMK_fake_script() -- DongAdmin.OnExecute 
+coroutine.wrap(TLVUESV_fake_script)()
+local function AHEAQ_fake_script() -- DongAdmin.OnExecute 
 	local script = Instance.new('LocalScript', DongAdmin)
 
 	local gui = script.Parent
@@ -429,4 +503,4 @@ local function BDOMK_fake_script() -- DongAdmin.OnExecute
 		Main.Visible = true
 	end)
 end
-coroutine.wrap(BDOMK_fake_script)()
+coroutine.wrap(AHEAQ_fake_script)()
