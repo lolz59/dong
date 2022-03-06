@@ -1,8 +1,3 @@
--- Gui to Lua
--- Version: 3.2
-
--- Instances:
-
 local DongAdmin = Instance.new("ScreenGui")
 local Boot = Instance.new("Frame")
 local Title = Instance.new("TextLabel")
