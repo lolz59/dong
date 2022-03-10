@@ -282,7 +282,7 @@ UICorner_10.Parent = Command_5
 
 -- Scripts:
 
-local function OYFZS_fake_script() -- CmdBar.Admin 
+local function QTHTSDD_fake_script() -- CmdBar.Admin 
 	local script = Instance.new('LocalScript', CmdBar)
 
 	local UserInputService = game:GetService("UserInputService")
@@ -317,7 +317,12 @@ local function OYFZS_fake_script() -- CmdBar.Admin
 	local cmds = {}
 	local admins = {Player}
 	local values = {
-		loopkill = {};
+		loopkill = {
+			guards = false;
+			inmates = false;
+			criminals = false;
+			other = false;
+		};
 		hitbox = false;
 		hitboxsize = 5;
 	}
@@ -342,7 +347,7 @@ local function OYFZS_fake_script() -- CmdBar.Admin
 	
 	function Kill(target: Player)
 		if not target or target.Character:FindFirstChildOfClass("ForceField") then return end
-		if target.Team == Player.Team then
+		if target.Team == Player.Team and target.Character then
 			local SavedCFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
 			local SavedCameraCFrame = workspace.CurrentCamera.CFrame
 			Remote.loadchar:InvokeServer(nil, BrickColor.random().Name)
@@ -452,6 +457,21 @@ local function OYFZS_fake_script() -- CmdBar.Admin
 		end
 	end
 	
+	function cmds.re(sender, args)
+		Remote.loadchar:InvokeServer(nil, Player.TeamColor.Name)
+	end
+	
+	function cmds.arrest(sender, args)
+		local target = args[1]
+		if target == "c" then
+			for i,v in pairs(Teams.Criminals:GetPlayers()) do
+				Remote.arrest:InvokeServer(v.Character.Head)
+			end
+		else
+			Remote.arrest:InvokeServer(findplr(target).Character.Head)
+		end
+	end
+	
 	function cmds.hbe(sender, args)
 		local enabled = args[1]
 		if enabled == "on" then
@@ -467,9 +487,11 @@ local function OYFZS_fake_script() -- CmdBar.Admin
 	end
 	
 	function cmds.guns(sender, args)
-		for i,v in pairs(workspace.Prison_ITEMS.giver:GetChildren()) do
-			ItemHandler:InvokeServer(v.ITEMPICKUP)
-		end
+		local giver = workspace.Prison_ITEMS.giver
+		ItemHandler:InvokeServer(giver["Remington 870"].ITEMPICKUP)
+		ItemHandler:InvokeServer(giver["M4A1"].ITEMPICKUP)
+		ItemHandler:InvokeServer(giver["AK47"].ITEMPICKUP)
+		ItemHandler:InvokeServer(giver["M9"].ITEMPICKUP)
 	end
 	
 	function cmds.size(sender)
@@ -591,8 +613,8 @@ local function OYFZS_fake_script() -- CmdBar.Admin
 		end
 	end)
 end
-coroutine.wrap(OYFZS_fake_script)()
-local function ALWUNO_fake_script() -- DongAdmin.OnExecute 
+coroutine.wrap(QTHTSDD_fake_script)()
+local function AUJHUXA_fake_script() -- DongAdmin.OnExecute 
 	local script = Instance.new('LocalScript', DongAdmin)
 
 	local gui = script.Parent
@@ -608,4 +630,4 @@ local function ALWUNO_fake_script() -- DongAdmin.OnExecute
 		Main.Visible = true
 	end)
 end
-coroutine.wrap(ALWUNO_fake_script)()
+coroutine.wrap(AUJHUXA_fake_script)()
