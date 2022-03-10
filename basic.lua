@@ -282,7 +282,7 @@ UICorner_10.Parent = Command_5
 
 -- Scripts:
 
-local function MJUI_fake_script() -- CmdBar.Admin 
+local function OYFZS_fake_script() -- CmdBar.Admin 
 	local script = Instance.new('LocalScript', CmdBar)
 
 	local UserInputService = game:GetService("UserInputService")
@@ -299,7 +299,7 @@ local function MJUI_fake_script() -- CmdBar.Admin
 	local OffPos = Frame.Position + UDim2.fromScale(0, 0.2)
 	
 	local Player = Players.LocalPlayer
-	local Character = Player.CharacterAdded:Wait()
+	local Character = Player.Character or Player.CharacterAdded:Wait()
 	
 	Frame.Position = OffPos
 	
@@ -591,18 +591,14 @@ local function MJUI_fake_script() -- CmdBar.Admin
 		end
 	end)
 end
-coroutine.wrap(MJUI_fake_script)()
-local function QFAOBUO_fake_script() -- DongAdmin.OnExecute 
+coroutine.wrap(OYFZS_fake_script)()
+local function ALWUNO_fake_script() -- DongAdmin.OnExecute 
 	local script = Instance.new('LocalScript', DongAdmin)
 
 	local gui = script.Parent
 	local Boot = gui:WaitForChild("Boot")
 	local Main = gui:WaitForChild("Main")
 	local Player = game.Players.LocalPlayer
-	
-	if not KRNL_LOADED then
-		Player:Kick("This executor is not supported\nMore info at github.com/lolz59/dong")
-	end
 	
 	Boot.Visible = true
 	Main.Visible = false
@@ -612,4 +608,4 @@ local function QFAOBUO_fake_script() -- DongAdmin.OnExecute
 		Main.Visible = true
 	end)
 end
-coroutine.wrap(QFAOBUO_fake_script)()
+coroutine.wrap(ALWUNO_fake_script)()
