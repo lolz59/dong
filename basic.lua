@@ -1,4 +1,8 @@
--- dong admin by bIue#4414
+-- Gui to Lua
+-- Version: 3.2
+
+-- Instances:
+
 local DongAdmin = Instance.new("ScreenGui")
 local Boot = Instance.new("Frame")
 local Title = Instance.new("TextLabel")
@@ -64,7 +68,7 @@ Description.BackgroundTransparency = 1.000
 Description.Position = UDim2.new(0.0996226445, 0, 0.355828255, 0)
 Description.Size = UDim2.new(0.800000012, 0, 0.200000003, 0)
 Description.Font = Enum.Font.Gotham
-Description.Text = "Press ; to open the command bar. This admin script is made by bIue#2958 for Prison Life. Join my discord server with the \"discord\" command"
+Description.Text = "Press ; to open the command bar. This admin script is made by bIue#4414 for Prison Life. Join my discord server with the \"discord\" command"
 Description.TextColor3 = Color3.fromRGB(255, 255, 255)
 Description.TextScaled = true
 Description.TextSize = 15.000
@@ -278,7 +282,7 @@ UICorner_10.Parent = Command_5
 
 -- Scripts:
 
-local function TCWDVO_fake_script() -- CmdBar.Admin 
+local function MJUI_fake_script() -- CmdBar.Admin 
 	local script = Instance.new('LocalScript', CmdBar)
 
 	local UserInputService = game:GetService("UserInputService")
@@ -355,9 +359,9 @@ local function TCWDVO_fake_script() -- CmdBar.Admin
 			local RayFire = {["RayObject"] = Ray.new(Vector3.new(), Vector3.new()),["Distance"] = 0,["Cframe"] = CFrame.new(),["Hit"] = Head}
 			ReplicatedStorage.ShootEvent:FireServer({RayFire, RayFire, RayFire, RayFire, RayFire, RayFire, RayFire}, Gun)
 		end
-		Gun.Parent = Character
+		Gun.Parent = Player.Backpack
 		RunService.RenderStepped:Wait()
-		Character:FindFirstChild("Remington 870"):Destroy()
+		Gun:Destroy()
 	end
 	
 	-- Commands
@@ -418,9 +422,33 @@ local function TCWDVO_fake_script() -- CmdBar.Admin
 	end
 	
 	function cmds.kill(sender, args)
-		local target = findplr(args[1])
-		if target and target ~= sender then
-			Kill(target)
+		local target = args[1]
+		if target == "all" then
+			for i,v in pairs(Players:GetPlayers()) do
+				if v ~= Player then
+					Kill(v)
+				end
+			end
+		elseif target == "i" then
+			for i,v in pairs(Teams.Inmates:GetPlayers()) do
+				if v ~= Player then
+					Kill(v)
+				end
+			end
+		elseif target == "g" then
+			for i,v in pairs(Teams.Guards:GetPlayers()) do
+				if v ~= Player then
+					Kill(v)
+				end
+			end
+		elseif target == "c" then
+			for i,v in pairs(Teams.Criminals:GetPlayers()) do
+				if v ~= Player then
+					Kill(v)
+				end
+			end
+		else
+			Kill(findplr(target))
 		end
 	end
 	
@@ -563,8 +591,8 @@ local function TCWDVO_fake_script() -- CmdBar.Admin
 		end
 	end)
 end
-coroutine.wrap(TCWDVO_fake_script)()
-local function ELXNN_fake_script() -- DongAdmin.OnExecute 
+coroutine.wrap(MJUI_fake_script)()
+local function QFAOBUO_fake_script() -- DongAdmin.OnExecute 
 	local script = Instance.new('LocalScript', DongAdmin)
 
 	local gui = script.Parent
@@ -584,4 +612,4 @@ local function ELXNN_fake_script() -- DongAdmin.OnExecute
 		Main.Visible = true
 	end)
 end
-coroutine.wrap(ELXNN_fake_script)()
+coroutine.wrap(QFAOBUO_fake_script)()
