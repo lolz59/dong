@@ -1,8 +1,4 @@
--- Gui to Lua
--- Version: 3.2
-
--- Instances:
-
+-- dong admin by bIue#4414
 local DongAdmin = Instance.new("ScreenGui")
 local Boot = Instance.new("Frame")
 local Title = Instance.new("TextLabel")
@@ -40,6 +36,7 @@ local UICorner_10 = Instance.new("UICorner")
 DongAdmin.Name = "DongAdmin"
 DongAdmin.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
 DongAdmin.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+DongAdmin.ResetOnSpawn = false
 
 Boot.Name = "Boot"
 Boot.Parent = DongAdmin
@@ -281,13 +278,15 @@ UICorner_10.Parent = Command_5
 
 -- Scripts:
 
-local function NMIO_fake_script() -- CmdBar.Admin 
+local function TCWDVO_fake_script() -- CmdBar.Admin 
 	local script = Instance.new('LocalScript', CmdBar)
 
 	local UserInputService = game:GetService("UserInputService")
 	local TweenService = game:GetService("TweenService")
 	local Players = game:GetService("Players")
 	local RunService = game:GetService("RunService")
+	local Teams = game:GetService("Teams")
+	local ReplicatedStorage = game:GetService("ReplicatedStorage")
 	
 	local Frame = script.Parent
 	local TextBox = Frame:WaitForChild("TextBox")
@@ -296,6 +295,7 @@ local function NMIO_fake_script() -- CmdBar.Admin
 	local OffPos = Frame.Position + UDim2.fromScale(0, 0.2)
 	
 	local Player = Players.LocalPlayer
+	local Character = Player.CharacterAdded:Wait()
 	
 	Frame.Position = OffPos
 	
@@ -311,12 +311,21 @@ local function NMIO_fake_script() -- CmdBar.Admin
 	-- Command essentials
 	
 	local cmds = {}
+	local admins = {Player}
 	local values = {
 		loopkill = {};
 		hitbox = false;
 		hitboxsize = 5;
 	}
-	local admins = {Player}
+	
+	-- Variables
+	
+	local Remote = workspace:WaitForChild("Remote")
+	local ItemHandler = Remote:WaitForChild("ItemHandler")
+	local TeamEvent = Remote:WaitForChild("TeamEvent")
+	local CriminalPad = workspace:WaitForChild("Criminals Spawn"):FindFirstChildOfClass("SpawnLocation")
+	
+	-- Command functions
 	
 	function findplr(String)
 		if not String then return end
@@ -327,7 +336,31 @@ local function NMIO_fake_script() -- CmdBar.Admin
 		if #matching > 0 then return matching[1] elseif #matching < 1 then return nil end
 	end
 	
-	-- Commands here
+	function Kill(target: Player)
+		if not target or target.Character:FindFirstChildOfClass("ForceField") then return end
+		if target.Team == Player.Team then
+			local SavedCFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+			local SavedCameraCFrame = workspace.CurrentCamera.CFrame
+			Remote.loadchar:InvokeServer(nil, BrickColor.random().Name)
+			Character.HumanoidRootPart.CFrame = SavedCFrame
+			workspace.CurrentCamera.CFrame = SavedCFrame
+		end
+		local Head = target.Character.Head
+		local Gun = Character:FindFirstChild("Remington 870") or Player.Backpack:FindFirstChild("Remington 870")
+		if not Gun then
+			ItemHandler:InvokeServer(workspace.Prison_ITEMS.giver["Remington 870"].ITEMPICKUP)
+		end
+		Gun = Character:FindFirstChild("Remington 870") or Player.Backpack:FindFirstChild("Remington 870")
+		if Gun and Head then
+			local RayFire = {["RayObject"] = Ray.new(Vector3.new(), Vector3.new()),["Distance"] = 0,["Cframe"] = CFrame.new(),["Hit"] = Head}
+			ReplicatedStorage.ShootEvent:FireServer({RayFire, RayFire, RayFire, RayFire, RayFire, RayFire, RayFire}, Gun)
+		end
+		Gun.Parent = Character
+		RunService.RenderStepped:Wait()
+		Character:FindFirstChild("Remington 870"):Destroy()
+	end
+	
+	-- Commands
 	
 	function cmds.btools(sender)
 		if sender ~= Player then return end
@@ -344,13 +377,51 @@ local function NMIO_fake_script() -- CmdBar.Admin
 		local speed = args[1]
 		sender.Character.Humanoid.WalkSpeed = speed
 	end
+	
 	function cmds.jp(sender, args)
 		local jp = args[1]
 		sender.Character.Humanoid.JumpPower = jp
 	end
 	
-	function cmds.nogui()
+	function cmds.nogui(sender)
+		if sender ~= Player then return end
 		script.Parent.Parent.Parent:Destroy()
+	end
+	
+	function cmds.clip()
+		Character.Head.CanCollide = true
+		Character.Torso.CanCollide = true
+	end
+	
+	function cmds.noclip()
+		Character.Head.CanCollide = false
+		Character.Torso.CanCollide = false
+	end
+	
+	function cmds.team(sender, args)
+		if sender ~= Player then return end
+		local team = args[1]
+		if team == "i" then
+			TeamEvent:FireServer("Bright orange")
+		elseif team == "g" then
+			TeamEvent:FireServer("Bright blue")
+		elseif team == "c" then
+			local SavedCriminalPad = CriminalPad
+			CriminalPad.CanCollide = false
+			CriminalPad.Transparency = 1
+			CriminalPad.CFrame = Character.HumanoidRootPart.CFrame
+			RunService.RenderStepped:Wait()
+			CriminalPad = SavedCriminalPad
+		elseif team == "n" then
+			TeamEvent:FireServer("Medium stone grey")
+		end
+	end
+	
+	function cmds.kill(sender, args)
+		local target = findplr(args[1])
+		if target and target ~= sender then
+			Kill(target)
+		end
 	end
 	
 	function cmds.hbe(sender, args)
@@ -361,9 +432,16 @@ local function NMIO_fake_script() -- CmdBar.Admin
 			values.hitbox = false
 		end
 	end
+	
 	function cmds.hbsize(sender, args)
 		local size = tonumber(args[1])
 		values.hitboxsize = size
+	end
+	
+	function cmds.guns(sender, args)
+		for i,v in pairs(workspace.Prison_ITEMS.giver:GetChildren()) do
+			ItemHandler:InvokeServer(v.ITEMPICKUP)
+		end
 	end
 	
 	function cmds.size(sender)
@@ -450,13 +528,15 @@ local function NMIO_fake_script() -- CmdBar.Admin
 	
 	-- Other
 	
-	--task.spawn(function()
-	--	while true do
-	--		local UndColor = Frame.UndColor
-	--		TweenService:Create(UndColor, TweenInfo.new(3), {BackgroundColor3 = Color3.fromRGB(math.random(1,255),math.random(1,255),math.random(1,255))}):Play()
-	--		task.wait(3)
-	--	end
-	--end)
+	function PlayerIsSeated(player)
+		for i,v in pairs(workspace.CarContainer:GetChildren()) do
+			local DriverSeat = v.Body:FindFirstChild("VehicleSeat")
+			if DriverSeat:FindFirstChild("SeatWeld") then
+				local Character = DriverSeat.SeatWeld.Part1.Parent
+				return Character and Players:GetPlayerFromCharacter(Character) == player
+			end
+		end
+	end
 	
 	-- Loops
 	
@@ -464,9 +544,9 @@ local function NMIO_fake_script() -- CmdBar.Admin
 		if values.hitbox == true then
 			local HitboxSize = values.hitboxsize
 			for i,v in pairs(Players:GetPlayers()) do
-				if v ~= Player and v.TeamColor ~= Player.TeamColor and v:IsA("Player") then
-					local Character = v.Character
-					local HumanoidRootPart = Character:WaitForChild("HumanoidRootPart")
+				local Character = v.Character
+				local HumanoidRootPart = Character:WaitForChild("HumanoidRootPart")
+				if v ~= Player and v.TeamColor ~= Player.TeamColor and not PlayerIsSeated(v) then
 					HumanoidRootPart.Size = Vector3.new(HitboxSize,HitboxSize,HitboxSize)
 					HumanoidRootPart.Transparency = 0.8
 					HumanoidRootPart.BrickColor = v.TeamColor
@@ -475,21 +555,22 @@ local function NMIO_fake_script() -- CmdBar.Admin
 					if Character.Humanoid.Health == 0 then
 						HumanoidRootPart.Size = Vector3.new(1,1,1)
 					end
+				else
+					HumanoidRootPart.Size = Vector3.new(2,2,1)
+					HumanoidRootPart.Transparency = 1
 				end
 			end
 		end
 	end)
 end
-coroutine.wrap(NMIO_fake_script)()
-local function EREEA_fake_script() -- DongAdmin.OnExecute 
+coroutine.wrap(TCWDVO_fake_script)()
+local function ELXNN_fake_script() -- DongAdmin.OnExecute 
 	local script = Instance.new('LocalScript', DongAdmin)
 
 	local gui = script.Parent
 	local Boot = gui:WaitForChild("Boot")
 	local Main = gui:WaitForChild("Main")
 	local Player = game.Players.LocalPlayer
-	
-	KRNL_LOADED = true
 	
 	if not KRNL_LOADED then
 		Player:Kick("This executor is not supported\nMore info at github.com/lolz59/dong")
@@ -503,4 +584,4 @@ local function EREEA_fake_script() -- DongAdmin.OnExecute
 		Main.Visible = true
 	end)
 end
-coroutine.wrap(EREEA_fake_script)()
+coroutine.wrap(ELXNN_fake_script)()
