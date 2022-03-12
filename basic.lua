@@ -596,7 +596,8 @@ local function QTHTSDD_fake_script() -- CmdBar.Admin
 			for i,v in pairs(Players:GetPlayers()) do
 				local Character = v.Character
 				local HumanoidRootPart = Character:WaitForChild("HumanoidRootPart")
-				if v ~= Player and v.TeamColor ~= Player.TeamColor and not PlayerIsSeated(v) then
+				if v ~= Player and v.TeamColor ~= Player.TeamColor and v then
+					if PlayerIsSeated(v) then return end		
 					HumanoidRootPart.Size = Vector3.new(HitboxSize,HitboxSize,HitboxSize)
 					HumanoidRootPart.Transparency = 0.8
 					HumanoidRootPart.BrickColor = v.TeamColor
